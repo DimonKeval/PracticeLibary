@@ -1,8 +1,8 @@
 package models;
 
 public class Author {
-    String name;
-    String lastname;
-    String placeOfBright;
-
+    private String name;
+    private String lastname;
+    private String placeOfBright;
+    private int authorId;
 }
