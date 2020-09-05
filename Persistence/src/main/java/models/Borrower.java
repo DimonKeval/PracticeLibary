@@ -1,5 +1,7 @@
 package models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 public class Borrower {
@@ -9,5 +11,10 @@ public class Borrower {
     private String phoneNumber;
     private String email;
     @Id
-    private int id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id_borrower;
+
+    public int getId_borrower() {
+        return id_borrower;
+    }
 }

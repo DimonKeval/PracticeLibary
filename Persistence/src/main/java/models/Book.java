@@ -48,4 +48,8 @@ public class Book {
     public boolean isBorrow() {
         return borrow;
     }
+
+    public void setBorrow(boolean borrow) {
+        this.borrow = borrow;
+    }
 }
