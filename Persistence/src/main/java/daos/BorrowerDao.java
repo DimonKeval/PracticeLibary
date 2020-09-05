@@ -1,3 +1,5 @@
+package daos;
+
 import models.Borrower;
 
 import javax.persistence.EntityManager;
@@ -17,12 +19,21 @@ public class BorrowerDao extends GenericDao<Borrower, Integer>{
             em.persist(borrower);
             em.flush();
             transaction.commit();
-            return borrower.getId_borrower();
+            return borrower.getIdBorrower();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
         }
         return 0;
+    }
+
+    public boolean exists(int idBorrower) {
+        Borrower borrower = super.read(idBorrower);
+        if (borrower != null){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

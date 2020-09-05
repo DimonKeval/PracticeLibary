@@ -1,3 +1,5 @@
+package daos;
+
 import models.Author;
 
 import javax.persistence.EntityManager;

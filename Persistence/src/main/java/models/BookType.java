@@ -1,12 +1,14 @@
 package models;
 
 public enum BookType {
-    DETECTIVE,
-    HORROR,
-    COMEDY,
     ACTION,
-    TRAVEL,
-    NOVEL,
+    COMEDY,
+    DETECTIVE,
     DOCUMENTATION,
-    SCIFICTION
+    HORROR,
+    NOVEL,
+    SCIFICTION,
+    TRAVEL
+
+
 }

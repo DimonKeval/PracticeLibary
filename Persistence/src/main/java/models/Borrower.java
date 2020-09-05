@@ -1,9 +1,12 @@
 package models;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Borrower")
 public class Borrower {
     private String name;
     private String lastname;
@@ -11,10 +14,11 @@ public class Borrower {
     private String phoneNumber;
     private String email;
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id_borrower;
+    @GeneratedValue
+    private int idBorrower;
 
-    public int getId_borrower() {
-        return id_borrower;
+    public int getIdBorrower() {
+        return idBorrower;
     }
+
 }

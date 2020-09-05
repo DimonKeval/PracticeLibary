@@ -1,12 +1,12 @@
 package models;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
-
+@Entity
+@Table(name = "Borrow")
 public class Borrow {
     @Id
+    @GeneratedValue
     private int borrowId;
     private LocalDate dateOfBorrowing;
     @ManyToOne
@@ -16,4 +16,9 @@ public class Borrow {
     @JoinColumn(name = "borrower_id")
     private Borrower borrower;
 
+    public Borrow(LocalDate dateOfBorrowing, Book book, Borrower borrower) {
+        this.dateOfBorrowing = dateOfBorrowing;
+        this.book = book;
+        this.borrower = borrower;
+    }
 }

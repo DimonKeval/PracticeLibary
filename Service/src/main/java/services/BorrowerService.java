@@ -1,3 +1,6 @@
+package services;
+
+import daos.BorrowerDao;
 import models.Borrower;
 
 import javax.persistence.EntityManager;

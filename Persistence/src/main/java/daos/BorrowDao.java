@@ -1,3 +1,5 @@
+package daos;
+
 import models.Borrow;
 
 import javax.persistence.EntityManager;

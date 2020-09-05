@@ -1,3 +1,5 @@
+package daos;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.lang.reflect.ParameterizedType;

@@ -3,12 +3,15 @@ package models;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.time.LocalDate;
-
+@Entity
+@Table(name = "Book")
 public class Book {
     private String title;
     private LocalDate dateOfRelease;
     @Id
+    @Column(precision = 0)
     private BigInteger isbn;
+    @Enumerated(EnumType.STRING)
     private BookType type;
     private int pages;
     private String description;
@@ -16,6 +19,20 @@ public class Book {
     @JoinColumn (name = "author_id")
     private Author author;
     private boolean borrow;
+
+    public Book() {
+    }
+
+    public Book(String title, LocalDate dateOfRelease, BigInteger isbn, BookType type, int pages, String description, Author author, boolean borrow) {
+        this.title = title;
+        this.dateOfRelease = dateOfRelease;
+        this.isbn = isbn;
+        this.type = type;
+        this.pages = pages;
+        this.description = description;
+        this.author = author;
+        this.borrow = borrow;
+    }
 
     public String getTitle() {
         return title;
