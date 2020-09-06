@@ -3,6 +3,7 @@ package daos;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 public abstract class GenericDao<T, K> {
     protected final EntityManager em;
@@ -64,6 +65,10 @@ public abstract class GenericDao<T, K> {
             }
         }
         return true;
+    }
+
+    public List<T> findAll() {
+        return em.createQuery("Select t from " + entityClass.getSimpleName() + " t").getResultList();
     }
 
 }

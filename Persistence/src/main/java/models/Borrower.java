@@ -20,6 +20,14 @@ public class Borrower {
     public Borrower() {
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
     public Borrower(String name, String lastname, String address, String phoneNumber, String email) {
         this.name = name;
         this.lastname = lastname;

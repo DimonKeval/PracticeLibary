@@ -103,6 +103,9 @@ public class AppLauncher {
                 borrowerId = scanFromConsole.nextInt();
                 System.out.println(bookService.BookBorrowing(isbnBorrow, borrowerId));
                 break;
+            case 4:
+                bookService.BookReturn();
+                break;
             default:
                 System.out.println("You didn't chose correct option to run. Try again.");
                 break;

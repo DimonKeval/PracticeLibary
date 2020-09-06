@@ -22,7 +22,18 @@ public class Borrow {
         this.borrower = borrower;
     }
 
+    public Borrow() {
+    }
+
     public int getBorrowId() {
         return borrowId;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public Borrower getBorrower() {
+        return borrower;
     }
 }

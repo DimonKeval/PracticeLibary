@@ -10,15 +10,21 @@ import models.Borrower;
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookService {
     private EntityManager em;
     private BookDao bookDao;
+    BorrowDao borrowDao;
+    BorrowerDao borrowerDao;
+    Scanner scan = new Scanner(System.in);
 
     public BookService(EntityManager em) {
         this.em = em;
         this.bookDao = new BookDao(em);
+        this.borrowDao = new BorrowDao(em);
+        this.borrowerDao = new BorrowerDao(em);
     }
 
     public String DeleteFromList(BigInteger isbn) {
@@ -40,8 +46,8 @@ public class BookService {
 
     public String BookBorrowing(BigInteger isbn, int borrowerId) {
         Book book = bookDao.read(isbn);
-        BorrowDao borrowDao = new BorrowDao(em);
-        BorrowerDao borrowerDao = new BorrowerDao(em);
+
+
         BorrowerService borrowerService = new BorrowerService(em);
         int borrowID = 0;
         if (book.isBorrow()) {
@@ -52,11 +58,11 @@ public class BookService {
             if (borrowerDao.exists(borrowerId)) {
                 book.setBorrow(true);
                 borrowDao.create(new Borrow(LocalDate.now(), book, borrowerDao.read(borrowerId)));
-            } else{
+            } else {
                 System.out.println(" - - - - - - - -\nAccount whit this id doesn't exist. Please write your data for " +
                         "creating new " +
                         "account");
-                Scanner scan = new Scanner(System.in);
+
                 System.out.println("Name: ");
                 String name = scan.nextLine();
                 System.out.println("Lastname: ");
@@ -78,8 +84,20 @@ public class BookService {
                 "\n Your borrow ID is: " + borrowID;
     }
 
-    public boolean BookReturn (int borrowId){
+    public boolean BookReturn() {
+        List<Borrow> borrowList = borrowDao.findAll();
+        borrowList.forEach(b -> System.out.println("Borrow ID: " + b.getBorrowId() + ": " + b.getBorrower().getIdBorrower() + " " + b.getBorrower().getName() + " " + b.getBorrower().getLastname() + " - - - " + b.getBook().getTitle() + " " + b.getBook().getIsbn()));
 
+        System.out.println("Choose Borrow ID, which do you want to close.");
+        int borrowID = scan.nextInt();
+        try {
+            Book returnBook = borrowDao.read(borrowID).getBook();
+            returnBook.setBorrow(false);
+            bookDao.update(returnBook);
+            borrowDao.delete(borrowID);
+        } catch (NullPointerException e) {
+            return false;
+        }
         return true;
     }
 }
