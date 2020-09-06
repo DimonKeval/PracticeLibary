@@ -5,10 +5,12 @@ import daos.BorrowDao;
 import daos.BorrowerDao;
 import models.Book;
 import models.Borrow;
+import models.Borrower;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class BookService {
     private EntityManager em;
@@ -40,16 +42,44 @@ public class BookService {
         Book book = bookDao.read(isbn);
         BorrowDao borrowDao = new BorrowDao(em);
         BorrowerDao borrowerDao = new BorrowerDao(em);
+        BorrowerService borrowerService = new BorrowerService(em);
+        int borrowID = 0;
         if (book.isBorrow()) {
-            return "You can't borrow this book now - this book is already borrowed by somebody.";
+            return " - - - - - - - - - - - - - - - \nYou can't borrow this book now - this book is already borrowed " +
+                    "by somebody.";
         } else {
 
             if (borrowerDao.exists(borrowerId)) {
                 book.setBorrow(true);
                 borrowDao.create(new Borrow(LocalDate.now(), book, borrowerDao.read(borrowerId)));
+            } else{
+                System.out.println(" - - - - - - - -\nAccount whit this id doesn't exist. Please write your data for " +
+                        "creating new " +
+                        "account");
+                Scanner scan = new Scanner(System.in);
+                System.out.println("Name: ");
+                String name = scan.nextLine();
+                System.out.println("Lastname: ");
+                String lastname = scan.nextLine();
+                System.out.println("Address: ");
+                String address = scan.nextLine();
+                System.out.println("Phone number: ");
+                String phoneNumber = scan.nextLine();
+                System.out.println("E-mail: ");
+                String email = scan.nextLine();
+                Borrower borrower = new Borrower(name, lastname, address, phoneNumber, email);
+                borrowerId = borrowerService.createNewAccount(borrower);
+                book.setBorrow(true);
+                borrowID = borrowDao.borrowABook(new Borrow(LocalDate.now(), book, borrowerDao.read(borrowerId)));
             }
         }
         bookDao.update(book);
-        return "Enjoy reading this wonder book.";
+        return " - - - - - - - - - - - - - - - - \nEnjoy reading this wonder book.\n - - - - - - - - - - - - - - - - " +
+                "\n Your borrow ID is: " + borrowID;
+    }
+
+    public boolean BookReturn (int borrowId){
+
+        return true;
     }
 }

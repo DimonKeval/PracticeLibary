@@ -28,6 +28,7 @@ public class AppLauncher {
         BookService bookService = new BookService(em);
         BookDao bookDao = new BookDao(em);
         Scanner scanFromConsole = new Scanner(System.in);
+
         System.out.println(" - - - - - - - - - - - - \nStarting the program.\n - - - - - - - - - - - - \n");
 
         System.out.println(" - - - - - - - - - - - - \nPlease, choose an option:\n - - - - - - - - - - - - \n" +
@@ -36,7 +37,7 @@ public class AppLauncher {
                 "3 - Borrow some book\n" +
                 "4 - Give back borrowed book\n");
         int option = scanFromConsole.nextInt();
-        scanFromConsole.nextLine();
+//        scanFromConsole.next();
 
         switch (option) {
             case 1:
@@ -50,7 +51,8 @@ public class AppLauncher {
                 BigInteger isbn = scanFromConsole.nextBigInteger();
 
                 System.out.println("Choose number of book's type from list " + Arrays.toString(BookType.values()));
-                BookType type = BookType.values()[scanFromConsole.nextInt()];
+                String value = scanFromConsole.nextLine();
+                BookType type = BookType.valueOf(value.toUpperCase());
 
                 System.out.println("Write how many pages has book: ");
                 int pages = scanFromConsole.nextInt();
@@ -83,12 +85,26 @@ public class AppLauncher {
                 System.out.println(" - - - - - - - - - - - - -\nPlease write ISBN of which book would you like to " +
                         "remove from library?");
                 BigInteger isbnForRemove = scanFromConsole.nextBigInteger();
-                if (bookDao.read(isbnForRemove) != null){
+                if (bookDao.read(isbnForRemove) != null) {
                     bookService.DeleteFromList(isbnForRemove);
                 } else {
                     System.out.println("Wrong ISBN or book is already removed.");
                 }
+            case 3:
+//                scanFromConsole.next();
+                System.out.println(" - - - - - - - - \nWrite isbn which book you want to borrow and you borrower_id " +
+                        "(if you don't have " +
+                        "an account, then just write some numbers and press enter to go forward).\n - - - - - - - - ");
+                BigInteger isbnBorrow;
+                int borrowerId;
+                System.out.println("ISBN: ");
+                isbnBorrow = scanFromConsole.nextBigInteger();
+                System.out.println("Borrower Id: ");
+                borrowerId = scanFromConsole.nextInt();
+                System.out.println(bookService.BookBorrowing(isbnBorrow, borrowerId));
+                break;
             default:
+                System.out.println("You didn't chose correct option to run. Try again.");
                 break;
         }
     }

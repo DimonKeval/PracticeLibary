@@ -17,6 +17,17 @@ public class Borrower {
     @GeneratedValue
     private int idBorrower;
 
+    public Borrower() {
+    }
+
+    public Borrower(String name, String lastname, String address, String phoneNumber, String email) {
+        this.name = name;
+        this.lastname = lastname;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public int getIdBorrower() {
         return idBorrower;
     }

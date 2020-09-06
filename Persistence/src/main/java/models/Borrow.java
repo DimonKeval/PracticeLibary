@@ -21,4 +21,8 @@ public class Borrow {
         this.book = book;
         this.borrower = borrower;
     }
+
+    public int getBorrowId() {
+        return borrowId;
+    }
 }
