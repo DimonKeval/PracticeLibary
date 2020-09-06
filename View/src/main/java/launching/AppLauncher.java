@@ -5,6 +5,7 @@ import daos.BookDao;
 import models.Author;
 import models.Book;
 import models.BookType;
+import models.Borrow;
 import services.AuthorService;
 import services.BookService;
 
@@ -15,6 +16,7 @@ import javax.persistence.Persistence;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class AppLauncher {
@@ -41,6 +43,7 @@ public class AppLauncher {
 
         switch (option) {
             case 1:
+                scanFromConsole.nextLine();
                 System.out.println("Write book's title: ");
                 String title = scanFromConsole.nextLine();
 
@@ -49,6 +52,7 @@ public class AppLauncher {
 
                 System.out.println("Write book's ISBN number: ");
                 BigInteger isbn = scanFromConsole.nextBigInteger();
+                scanFromConsole.nextLine();
 
                 System.out.println("Choose number of book's type from list " + Arrays.toString(BookType.values()));
                 String value = scanFromConsole.nextLine();
@@ -84,12 +88,16 @@ public class AppLauncher {
             case 2:
                 System.out.println(" - - - - - - - - - - - - -\nPlease write ISBN of which book would you like to " +
                         "remove from library?");
+                List<Book> bookList = bookDao.findAll();
+                bookList.forEach(b -> System.out.println(b.toString()));
+
                 BigInteger isbnForRemove = scanFromConsole.nextBigInteger();
                 if (bookDao.read(isbnForRemove) != null) {
                     bookService.DeleteFromList(isbnForRemove);
                 } else {
                     System.out.println("Wrong ISBN or book is already removed.");
                 }
+                break;
             case 3:
 //                scanFromConsole.next();
                 System.out.println(" - - - - - - - - \nWrite isbn which book you want to borrow and you borrower_id " +

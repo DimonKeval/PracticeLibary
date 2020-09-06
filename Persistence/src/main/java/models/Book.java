@@ -34,6 +34,17 @@ public class Book {
         this.borrow = borrow;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", isbn=" + isbn +
+                ", type=" + type +
+                ", pages=" + pages +
+                ", author=" + author +
+                '}';
+    }
+
     public String getTitle() {
         return title;
     }
